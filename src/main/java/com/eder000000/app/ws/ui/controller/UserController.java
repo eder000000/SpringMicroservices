@@ -1,5 +1,6 @@
 package com.eder000000.app.ws.ui.controller;
 
+import model.response.UserRest;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,8 +14,13 @@ public class UserController {
         return "get user was called with page=" + page + " and limits= " + limit + "and sort = " + sort;
     }
     @GetMapping(path = "/{userId}")
-    public String getUser(@PathVariable String userId){
-        return "get user was called with " + userId;
+    public UserRest getUser(@PathVariable String userId){
+        UserRest returnValue = new UserRest();
+        returnValue.setEmail("test@test.com");
+        returnValue.setFirstName("Alice");
+        returnValue.setLastName("Wonderland");
+
+        return returnValue;
     }
 
     @PostMapping
