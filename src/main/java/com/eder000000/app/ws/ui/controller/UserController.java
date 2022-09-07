@@ -1,5 +1,6 @@
 package com.eder000000.app.ws.ui.controller;
 
+import model.request.UpdateUserDetailsRequestModel;
 import model.request.UserDetailsRequestModel;
 import model.response.UserRest;
 import org.springframework.http.HttpStatus;
@@ -56,9 +57,18 @@ public class UserController {
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
-    @PutMapping
-    public String updateUser(){
-        return "update user was called";
+    @PutMapping(path = "/{userId}", consumes = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE},
+            produces = {
+                    MediaType.APPLICATION_XML_VALUE,
+                    MediaType.APPLICATION_JSON_VALUE})
+    public UserRest updateUser(@PathVariable String userId,@Valid @RequestBody UpdateUserDetailsRequestModel updateUserDetailsRequestModel ){
+        UserRest storeUserDetails = userRestMap.get(userId);
+        storeUserDetails.setFirstName((updateUserDetailsRequestModel.getFirstName()));
+        storeUserDetails.setLastName(updateUserDetailsRequestModel.getLastName());
+        userRestMap.put(userId, storeUserDetails);
+        return storeUserDetails;
     }
 
     @DeleteMapping
