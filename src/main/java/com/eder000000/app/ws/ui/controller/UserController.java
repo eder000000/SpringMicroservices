@@ -1,5 +1,6 @@
 package com.eder000000.app.ws.ui.controller;
 
+import com.eder000000.app.ws.exceptions.UserServiceExceptions;
 import model.request.UpdateUserDetailsRequestModel;
 import model.request.UserDetailsRequestModel;
 import model.response.UserRest;
@@ -30,8 +31,9 @@ public class UserController {
                                     MediaType.APPLICATION_XML_VALUE,
                                     MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserRest> getUser(@PathVariable String userId){
-        String firstName = null;
-        int firstNameLength = firstName.length();
+
+       if(true) throw new UserServiceExceptions("A user service exception is thrown");
+
        if(userRestMap.containsKey(userId)){
            return new ResponseEntity<>(userRestMap.get(userId), HttpStatus.OK);
        } else{
