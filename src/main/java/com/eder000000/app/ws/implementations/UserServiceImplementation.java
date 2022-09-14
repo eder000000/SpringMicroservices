@@ -1,7 +1,9 @@
 package com.eder000000.app.ws.implementations;
 
+import com.eder000000.app.ws.shared.Utils;
 import model.request.UserDetailsRequestModel;
 import model.response.UserRest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.eder000000.app.ws.userService.UserService;
 
@@ -12,6 +14,15 @@ import java.util.UUID;
 @Service
 public class UserServiceImplementation implements UserService {
     Map<String, UserRest> userRestMap;
+    Utils utils;
+
+    public UserServiceImplementation() {
+    }
+
+    @Autowired
+    public UserServiceImplementation(Utils utils){
+        this.utils = utils;
+    }
 
     @Override
     public UserRest createUser(UserDetailsRequestModel userDetailsRequestModel) {
@@ -20,7 +31,7 @@ public class UserServiceImplementation implements UserService {
         returnValue.setFirstName(userDetailsRequestModel.getFirstName());
         returnValue.setLastName(userDetailsRequestModel.getLastName());
 
-        String userId = UUID.randomUUID().toString();
+        String userId = utils.generatedUserId();
         returnValue.setUserId(userId);
 
         if(userRestMap == null) userRestMap = new HashMap<>();
